@@ -1,0 +1,5 @@
+outs:
+- md5: 319c0641921244d86a77fcebce53816a
+  size: 6094
+  hash: md5
+  path: wallet_features.csv
