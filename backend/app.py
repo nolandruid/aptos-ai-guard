@@ -15,15 +15,28 @@ except:
 
 # Connect TBD - fetch_wallet_data.py
 try:
-    from fetch_wallet_data import get_wallet_features # pass the reciever's wallert address
+    from fetch_wallet_data import get_wallet_features  # fetches wallet features as a dict
 except ImportError:
-    def fetch_wallet_data(wallet_address):
+    def get_wallet_features(wallet_address):
         return {
+            "address": wallet_address,
             "tx_count": 42,
             "unique_peers": 5,
-            "avg_tx_amount": 2.35,
-            "has_nft": 1,
-            "days_since_first_tx": 77
+            "avg_amount_sent": 2.35,
+            "days_active": 10,
+            "nfts_owned": 1
+        }
+
+try:
+    import sys
+    sys.path.append(os.path.join(os.path.dirname(__file__), '../model'))
+    from risk_score import get_risk_score
+except ImportError:
+    def get_risk_score(wallet_data):
+        return {
+            'address': wallet_data.get('address', ''),
+            'score': 1.0,
+            'status': 'High Risk'
         }
 
 app = Flask(__name__)
@@ -37,42 +50,11 @@ def risk_score():
     if not wallet_address:
         return jsonify({"error": "Missing 'wallet_address'"}), 400
 
-    features_dict = fetch_wallet_data(wallet_address)
-    """
-    Feature Definitions (used for model input):
+    features_dict = get_wallet_features(wallet_address)
+    # Call the ML risk scoring function
+    result = get_risk_score(features_dict)
 
-    - tx_count: Total number of transactions by the wallet.
-    - avg_amount_sent: Average amount sent per transaction (in APT).
-    - unique_peers: Number of unique wallet addresses this wallet has interacted with.
-    - days_active: Number of distinct days on which the wallet was active (sent or received APT).
-    - received_amount: Total amount received by the wallet (in APT).
-    - wallet_age_days: Number of days since the wallet’s first recorded transaction.
-    - last_active_days_ago: Number of days since the wallet's most recent transaction.
-    - nfts_owned: Number of NFTs or NFT-related tokens held by the wallet.
-    - token_types_held: Number of unique fungible token types held by the wallet.
-    """
-    features = [
-        features_dict["tx_count"],
-        features_dict["unique_peers"],
-        features_dict["avg_tx_amount"],
-        features_dict["has_nft"],
-        features_dict["days_since_first_tx"]
-    ]
-
-    if model_loaded:
-        label_raw = model.predict([features])[0]
-        confidence = model.predict_proba([features]).max()
-        label = "Trusted" if label_raw == 1 else "Suspicious"
-    else:
-        # dummy result
-        label = "Trusted"
-        confidence = 0.87
-
-    return jsonify({
-        "wallet_address": wallet_address,
-        "label": label,
-        "confidence": round(float(confidence), 2)
-    })
+    return jsonify(result)
 
 
 @app.route('/aptos_to_cad', methods=['POST'])
