@@ -29,12 +29,12 @@ app = Flask(__name__)
 @app.route('/risk_score', methods=['POST'])
 def risk_score():
     data = request.get_json()
-    recipient = data.get('recipient')
+    wallet_address = data.get('wallet_address')
 
-    if not recipient:
-        return jsonify({"error": "Missing 'recipient'"}), 400
+    if not wallet_address:
+        return jsonify({"error": "Missing 'wallet_address'"}), 400
 
-    features_dict = fetch_wallet_data(recipient)
+    features_dict = fetch_wallet_data(wallet_address)
     """
     Sample features:
     - tx_count: Total number of transactions
@@ -61,7 +61,7 @@ def risk_score():
         confidence = 0.87
 
     return jsonify({
-        "wallet_address": recipient,
+        "wallet_address": wallet_address,
         "label": label,
         "confidence": round(float(confidence), 2)
     })
