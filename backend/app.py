@@ -54,29 +54,19 @@ def risk_score():
     wallet_address = data.get('wallet_address')
 
     if not wallet_address:
-        return jsonify({"error": "Missing 'wallet_address'"}), 400
+        return jsonify({"error": "Missing 'wallet_address'", "wallet_found": False}), 400
 
     features_dict = fetch_wallet_data(wallet_address)
-    """
-    Sample features used for model prediction:
-    - tx_count: Total number of transactions
-    - unique_peers: Number of unique wallet interactions
-    - avg_amount_sent: Average amount sent per transaction
-    - days_active: Number of distinct active days
-    - received_amount: Total amount received
-    - wallet_age_days: Number of days since the wallet's first transaction
-    - last_active_days_ago: Days since the wallet's last activity
-    - nfts_owned: Number of NFTs held by the wallet
-    - token_types_held: Number of different token types the wallet holds
-    """
-    
-    if len(features_dict) == 0:
+    if not features_dict:
+        # Wallet not found or no transactions
         return jsonify({
-        "wallet_address": wallet_address,
-        "label": 'No Transaction Found.',
-        "confidence": 0.5
-    })
-        
+            "address": wallet_address,
+            "score": 1.0,
+            "status": "High Risk",
+            "wallet_found": False,
+            "error": "Wallet not found or no transactions"
+        }), 404
+
     features = [
         features_dict["tx_count"],
         features_dict["unique_peers"],
@@ -98,11 +88,13 @@ def risk_score():
         label = "Trusted"
         confidence = 0.87
 
-    return jsonify({
+    result = {
         "wallet_address": wallet_address,
         "label": label,
-        "confidence": round(float(confidence), 2)
-    })
+        "confidence": round(float(confidence), 2),
+        "wallet_found": True
+    }
+    return jsonify(result)
 
 
 @app.route('/aptos_to_cad', methods=['POST'])
