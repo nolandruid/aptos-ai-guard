@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import os
+import requests
 
 # Connect TBD - model.pkl
 try:
@@ -66,5 +67,36 @@ def risk_score():
         "confidence": round(float(confidence), 2)
     })
 
+
+@app.route('/aptos_to_cad', methods=['POST'])
+def aptos_to_cad():
+    data = request.get_json()
+    amount = data.get("amount")
+
+    if amount is None:
+        return jsonify({"error": "Missing 'amount' in request"}), 400
+
+    try:
+        # Call CoinGecko API 
+        url = "https://api.coingecko.com/api/v3/simple/price"
+        params = {
+            "ids": "aptos",
+            "vs_currencies": "cad"
+        }
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        price_data = response.json()
+        apt_to_cad = price_data["aptos"]["cad"]
+
+        total_value = round(float(amount) * apt_to_cad, 2)
+
+        return jsonify({
+            "amount": amount,
+            "cad_value": total_value
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch price: {str(e)}"}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
