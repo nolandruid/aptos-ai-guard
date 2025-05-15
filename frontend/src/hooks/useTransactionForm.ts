@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { verifyRisk } from "../service/verifyRisk";
+import { mapToFiveScale } from "../utils/mappers";
 
 export const useTransactionForm = () => {
   const {
@@ -18,6 +19,7 @@ export const useTransactionForm = () => {
   const onSubmit = async (data: FormValues) => {
     const risk = await verifyRisk({ addressWallet: data.destinationAddress });
     console.log("🚀 Risk:", risk);
+    console.log("🚀 Risk mapped:", mapToFiveScale(risk.confidenceScore));
   };
 
   return {
