@@ -1,5 +1,6 @@
 import { useWalletStore } from "../store/walletStore";
 import { useTransactionForm } from "../hooks/";
+import { TrustLevelSlider } from "./TrustLevelSlider";
 
 type FormValues = {
   destinationAddress: string;
@@ -62,6 +63,8 @@ export const TransactionForm = () => {
             {errors.destinationAddress.message}
           </span>
         )}
+
+        <TrustLevelSlider riskScore={0.89} />
       </div>
 
       <div className="mb-4">
