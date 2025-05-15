@@ -3,8 +3,9 @@ import os
 
 # Connect TBD - model.pkl
 try:
+    model_path = os.path.join(os.path.dirname(__file__), 'ml', 'model.pkl')
     import joblib
-    model = joblib.load('model.pkl')
+    model = joblib.load(model_path)
     model_loaded = True
 except:
     model = None
@@ -60,7 +61,7 @@ def risk_score():
         confidence = 0.87
 
     return jsonify({
-        "recipient": recipient,
+        "wallet_address": recipient,
         "label": label,
         "confidence": round(float(confidence), 2)
     })
