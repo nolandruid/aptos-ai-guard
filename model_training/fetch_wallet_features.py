@@ -51,11 +51,9 @@ def get_account_resources(address: str) -> List[Dict[str, Any]]:
         return []
 
 def label_wallet(tx_count: int, peer_count: int) -> int:
-    if tx_count >= 20 and peer_count >= 5:
-        return 1
-    elif tx_count <= 5 and peer_count <= 1:
-        return 0
-    return 2
+    if tx_count <= 5 and peer_count <= 1:
+        return 0  # suspicious
+    return 1  # treat both trusted and unknown as '1'
 
 def extract_features(address: str) -> Dict[str, Any]:
     txs = get_transactions(address)

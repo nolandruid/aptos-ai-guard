@@ -7,7 +7,7 @@ import requests
 try:
     model_path = os.path.join(os.path.dirname(__file__), 'ml', 'model.pkl')
     import joblib
-    model = joblib.load(model_path)
+    model = joblib.load('model.pkl')
     model_loaded = True
 except:
     model = None
@@ -15,7 +15,7 @@ except:
 
 # Connect TBD - fetch_wallet_data.py
 try:
-    from fetch_wallet_data import fetch_wallet_data
+    from fetch_wallet_data import get_wallet_features # pass the reciever's wallert address
 except ImportError:
     def fetch_wallet_data(wallet_address):
         return {
@@ -39,12 +39,17 @@ def risk_score():
 
     features_dict = fetch_wallet_data(wallet_address)
     """
-    Sample features:
-    - tx_count: Total number of transactions
-    - unique_peers: Number of unique wallet interactions
-    - avg_tx_amount: Average transaction amount
-    - has_nft: Whether the wallet holds any NFTs
-    - days_since_first_tx: Age of the wallet (in days)
+    Feature Definitions (used for model input):
+
+    - tx_count: Total number of transactions by the wallet.
+    - avg_amount_sent: Average amount sent per transaction (in APT).
+    - unique_peers: Number of unique wallet addresses this wallet has interacted with.
+    - days_active: Number of distinct days on which the wallet was active (sent or received APT).
+    - received_amount: Total amount received by the wallet (in APT).
+    - wallet_age_days: Number of days since the wallet’s first recorded transaction.
+    - last_active_days_ago: Number of days since the wallet's most recent transaction.
+    - nfts_owned: Number of NFTs or NFT-related tokens held by the wallet.
+    - token_types_held: Number of unique fungible token types held by the wallet.
     """
     features = [
         features_dict["tx_count"],
