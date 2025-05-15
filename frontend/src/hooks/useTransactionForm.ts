@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { verifyRisk } from "../service/verifyRisk";
 
 export const useTransactionForm = () => {
   const {
@@ -15,7 +16,8 @@ export const useTransactionForm = () => {
   const estimatedReceive = amount * 3;
 
   const onSubmit = async (data: FormValues) => {
-    console.log("🚀 Sending tokens:", data);
+    const risk = await verifyRisk({ addressWallet: data.destinationAddress });
+    console.log("🚀 Risk:", risk);
   };
 
   return {

@@ -2,7 +2,7 @@ import { useWalletStore } from "../store/walletStore";
 import { useTransactionForm } from "../hooks/";
 
 type FormValues = {
-  recipient: string;
+  destinationAddress: string;
   amount: number;
 };
 
@@ -47,7 +47,7 @@ export const TransactionForm = () => {
           Recipient Wallet Address
         </label>
         <input
-          {...register("recipient", {
+          {...register("destinationAddress", {
             required: "Address is required",
             validate: (value) =>
               value.startsWith("0x") && value.length >= 32
@@ -57,9 +57,9 @@ export const TransactionForm = () => {
           placeholder="0xabc123..."
           className="w-full border px-3 py-2 rounded"
         />
-        {errors.recipient && (
+        {errors.destinationAddress && (
           <span className="text-red-500 text-sm">
-            {errors.recipient.message}
+            {errors.destinationAddress.message}
           </span>
         )}
       </div>
