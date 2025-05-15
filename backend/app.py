@@ -60,9 +60,9 @@ def risk_score():
     if not features_dict:
         # Wallet not found or no transactions
         return jsonify({
-            "address": wallet_address,
-            "score": 1.0,
-            "status": "High Risk",
+            "wallet_address": wallet_address,
+            "label": "High Risk",
+            "confidence": 0.0,
             "wallet_found": False,
             "error": "Wallet not found or no transactions"
         }), 404
