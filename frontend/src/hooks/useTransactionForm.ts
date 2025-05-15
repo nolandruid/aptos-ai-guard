@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { verifyRisk } from "../service/verifyRisk";
+import { getAptosToCad } from "../service/getAptosToCad";
 import { mapToFiveScale } from "../utils/mappers";
 
 export const useTransactionForm = () => {
@@ -18,8 +19,10 @@ export const useTransactionForm = () => {
 
   const onSubmit = async (data: FormValues) => {
     const risk = await verifyRisk({ addressWallet: data.destinationAddress });
+    const cadConversion = await getAptosToCad(amount);
     console.log("🚀 Risk:", risk);
     console.log("🚀 Risk mapped:", mapToFiveScale(risk.confidenceScore));
+    console.log("💰 CAD value:", cadConversion.cadValue);
   };
 
   return {
