@@ -27,9 +27,8 @@ except:
     model_loaded = False
     print('failed to load ', model_path)
 
-# Connect TBD - fetch_wallet_data.py
 try:
-    from fetch_wallet_data import fetch_wallet_data
+    from fetch_wallet_data import get_wallet_features as fetch_wallet_data
 except ImportError:
     def fetch_wallet_data(wallet_address):
         return {
@@ -70,6 +69,14 @@ def risk_score():
     - nfts_owned: Number of NFTs held by the wallet
     - token_types_held: Number of different token types the wallet holds
     """
+    
+    if len(features_dict) == 0:
+        return jsonify({
+        "wallet_address": wallet_address,
+        "label": 'No Transaction Found.',
+        "confidence": 0.5
+    })
+        
     features = [
         features_dict["tx_count"],
         features_dict["unique_peers"],
@@ -81,8 +88,8 @@ def risk_score():
         features_dict["nfts_owned"],
         features_dict["token_types_held"]
     ]
-
-    if model_loaded:
+    print('Loaded ', wallet_address, ' --> ',features)
+    if model_loaded:    
         label_raw = model.predict([features])[0]
         confidence = model.predict_proba([features]).max()
         label = "Trusted" if label_raw == 1 else "Suspicious"
