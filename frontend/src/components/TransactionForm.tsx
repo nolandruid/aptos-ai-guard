@@ -1,37 +1,31 @@
-import { useForm } from "react-hook-form"
-import { useWalletStore } from "../store/walletStore"
+import { useWalletStore } from "../store/walletStore";
+import { useTransactionForm } from "../hooks/";
 
 type FormValues = {
-  recipient: string
-  amount: number
-}
+  recipient: string;
+  amount: number;
+};
 
 export const TransactionForm = () => {
-  const { address } = useWalletStore()
+  const { address } = useWalletStore();
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isValid },
-  } = useForm<FormValues>({
-    mode: "onChange",
-  })
-
-  const rawAmount = watch("amount") || "0"
-  const amount = parseFloat(rawAmount.toString())
-  const estimatedReceive = amount * 3 // Simulación
-
-  const onSubmit = async (data: FormValues) => {
-    console.log("🚀 Sending tokens:", data)
-  }
+    rawAmount,
+    amount,
+    estimatedReceive,
+    onSubmit,
+  } = useTransactionForm();
 
   if (!address) {
     return (
       <div className="p-4 text-red-600 font-medium">
         Wallet not connected. Please connect Petra Wallet.
       </div>
-    )
+    );
   }
 
   return (
@@ -90,19 +84,17 @@ export const TransactionForm = () => {
       <div className="bg-green-100 text-green-700 rounded p-4 mb-4">
         <p className="font-semibold">Receiver gets</p>
         <p className="text-2xl font-bold">
-          {isNaN(estimatedReceive)
-            ? "—"
-            : `${estimatedReceive.toFixed(4)} APT`}
+          {isNaN(estimatedReceive) ? "—" : `${estimatedReceive.toFixed(4)} CAD`}
         </p>
       </div>
 
       <button
         type="submit"
         disabled={!isValid}
-        className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Send Now
       </button>
     </form>
-  )
-}
+  );
+};
