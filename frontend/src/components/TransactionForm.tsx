@@ -1,5 +1,6 @@
 import { useWalletStore } from "../store/walletStore";
 import { useTransactionForm } from "../hooks/";
+import React, { useState } from "react";
 
 type FormValues = {
   destinationAddress: string;
@@ -8,6 +9,8 @@ type FormValues = {
 
 export const TransactionForm = () => {
   const { address } = useWalletStore();
+  // State to hold the mock transaction message
+  const [mockMessage, setMockMessage] = useState("");
 
   const {
     register,
@@ -17,8 +20,17 @@ export const TransactionForm = () => {
     rawAmount,
     amount,
     estimatedReceive,
-    onSubmit,
+    onSubmit: originalOnSubmit,
   } = useTransactionForm();
+
+  // Custom onSubmit handler to trigger mock transaction
+  const onSubmit = async (data: FormValues) => {
+    await originalOnSubmit(data); // still call the original risk check logic
+    // Set the mock transaction message
+    setMockMessage(
+      `Mock transaction: Sent ${data.amount} APT to ${data.destinationAddress}`
+    );
+  };
 
   if (!address) {
     return (
@@ -95,6 +107,12 @@ export const TransactionForm = () => {
       >
         Send Now
       </button>
+      {/* Display the mock transaction message if present */}
+      {mockMessage && (
+        <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded">
+          {mockMessage}
+        </div>
+      )}
     </form>
   );
 };
