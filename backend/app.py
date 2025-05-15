@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import requests
 
@@ -26,6 +27,7 @@ except ImportError:
         }
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/risk_score', methods=['POST'])
 def risk_score():
