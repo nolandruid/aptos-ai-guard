@@ -2,6 +2,7 @@ import { useWalletStore } from "../store/walletStore";
 import { useTransactionForm } from "../hooks/";
 import { TrustLevelSlider } from "./TrustLevelSlider";
 import { useConfidenceScoreStore } from "../store/confindenceScoreStore";
+import { useMoneyConversionStore } from "../store/moneyConversionStore";
 
 type FormValues = {
   destinationAddress: string;
@@ -15,10 +16,10 @@ export const TransactionForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    estimatedReceive,
     onSubmit,
   } = useTransactionForm();
 
+  const { cadValue } = useMoneyConversionStore()
   const { score } = useConfidenceScoreStore()
 
   if (!address) {
@@ -64,7 +65,7 @@ export const TransactionForm = () => {
           </span>
         )}
 
-        <TrustLevelSlider riskScore={score} />
+        {score !== null && <TrustLevelSlider riskScore={score} />}
       </div>
 
       <div className="mb-4">
@@ -87,7 +88,7 @@ export const TransactionForm = () => {
       <div className="bg-green-100 text-green-700 rounded p-4 mb-4">
         <p className="font-semibold">Receiver gets</p>
         <p className="text-2xl font-bold">
-          {isNaN(estimatedReceive) ? "—" : `${estimatedReceive.toFixed(4)} CAD`}
+          {cadValue === null ? "—" : `${cadValue.toFixed(2)} CAD`}
         </p>
       </div>
 

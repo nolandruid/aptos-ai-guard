@@ -2,6 +2,10 @@ import { useForm } from "react-hook-form";
 import { verifyRisk } from "../service/verifyRisk";
 import { getAptosToCad } from "../service/getAptosToCad";
 import { mapToFiveScale } from "../utils/mappers";
+import { useConfidenceScoreStore } from "../store/confindenceScoreStore";
+import { useMoneyConversionStore } from "../store/moneyConversionStore";
+
+
 
 export const useTransactionForm = () => {
   const {
@@ -14,15 +18,16 @@ export const useTransactionForm = () => {
   });
 
   const { setScore } = useConfidenceScoreStore()
+  const { setCadValue } = useMoneyConversionStore()
 
   const rawAmount = watch("amount") || "0";
   const amount = parseFloat(rawAmount.toString());
-  const estimatedReceive = amount * 3;
 
   const onSubmit = async (data: FormValues) => {
     const risk = await verifyRisk({ addressWallet: data.destinationAddress });
     const cadConversion = await getAptosToCad(amount);
-    setScore(mapToFiveScale(risk.confidenceScore))
+    
+    setScore(risk.confidenceScore)
     setCadValue(cadConversion.cadValue)
   };
 
@@ -33,7 +38,6 @@ export const useTransactionForm = () => {
     formState: { errors, isValid },
     rawAmount,
     amount,
-    estimatedReceive,
     onSubmit,
   };
 };

@@ -6,14 +6,9 @@ export const TrustLevelSlider = ({
 }: {
     riskScore: number;
 }) => {
-  const [value, setValue] = useState(riskScore);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseFloat(e.target.value));
-  };
-
-  const mappedValue = mapToFiveScale(value);
-
+  const mappedValue = mapToFiveScale(riskScore);
+  
   const getTrustLabel = (num: number) => {
     if (num < 2) return "Very Risky";
     if (num < 3.5) return "Moderate";
@@ -24,7 +19,7 @@ export const TrustLevelSlider = ({
   // Dynamic slider track color from red to green
   const trackStyle = {
     background: `linear-gradient(to right, red 0%, orange ${
-      value * 50
+      riskScore * 50
     }%, green 100%)`,
   };
 
@@ -39,8 +34,7 @@ export const TrustLevelSlider = ({
           min="0"
           max="1"
           step="0.01"
-          value={value}
-          onChange={handleChange}
+          value={riskScore}
           disabled
           className="w-full h-2 rounded-lg appearance-none cursor-not-allowed"
           style={trackStyle}
