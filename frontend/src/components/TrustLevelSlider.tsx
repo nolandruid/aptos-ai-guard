@@ -41,12 +41,10 @@ export const TrustLevelSlider = ({
           step="0.01"
           value={value}
           onChange={handleChange}
-          className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+          disabled
+          className="w-full h-2 rounded-lg appearance-none cursor-not-allowed"
           style={trackStyle}
         />
-        <span className="w-16 text-right font-medium text-gray-700">
-          {(value * 100).toFixed(0)}%
-        </span>
       </div>
       <div className="mt-4 text-center text-xl font-bold text-gray-800">
         {mappedValue} - {getTrustLabel(parseFloat(mappedValue))}

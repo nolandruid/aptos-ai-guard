@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-export const useRiskStore = create<{
+export const useConfidenceScoreStore = create<{
   score: "low" | "medium" | "high" | null
   loading: boolean
   setScore: (s: "low" | "medium" | "high") => void

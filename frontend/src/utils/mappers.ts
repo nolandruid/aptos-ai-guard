@@ -1,3 +1,3 @@
 export const mapToFiveScale = (value: number) => {
-    return 1 + value * 4;
+    return (value * 5).toFixed(2);
 }

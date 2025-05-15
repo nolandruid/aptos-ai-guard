@@ -13,6 +13,8 @@ export const useTransactionForm = () => {
     mode: "onChange",
   });
 
+  const { setScore } = useConfidenceScoreStore()
+
   const rawAmount = watch("amount") || "0";
   const amount = parseFloat(rawAmount.toString());
   const estimatedReceive = amount * 3;
@@ -20,9 +22,8 @@ export const useTransactionForm = () => {
   const onSubmit = async (data: FormValues) => {
     const risk = await verifyRisk({ addressWallet: data.destinationAddress });
     const cadConversion = await getAptosToCad(amount);
-    console.log("🚀 Risk:", risk);
-    console.log("🚀 Risk mapped:", mapToFiveScale(risk.confidenceScore));
-    console.log("💰 CAD value:", cadConversion.cadValue);
+    setScore(mapToFiveScale(risk.confidenceScore))
+    setCadValue(cadConversion.cadValue)
   };
 
   return {

@@ -1,6 +1,7 @@
 import { useWalletStore } from "../store/walletStore";
 import { useTransactionForm } from "../hooks/";
 import { TrustLevelSlider } from "./TrustLevelSlider";
+import { useConfidenceScoreStore } from "../store/confindenceScoreStore";
 
 type FormValues = {
   destinationAddress: string;
@@ -13,13 +14,12 @@ export const TransactionForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
-    rawAmount,
-    amount,
     estimatedReceive,
     onSubmit,
   } = useTransactionForm();
+
+  const { score } = useConfidenceScoreStore()
 
   if (!address) {
     return (
@@ -64,7 +64,7 @@ export const TransactionForm = () => {
           </span>
         )}
 
-        <TrustLevelSlider riskScore={0.89} />
+        <TrustLevelSlider riskScore={score} />
       </div>
 
       <div className="mb-4">
