@@ -2,13 +2,17 @@
 
 ML-backed wallet risk detector for Aptos transactions
 
+![Python](https://img.shields.io/badge/python-3.8+-blue)
+![Flask](https://img.shields.io/badge/backend-flask-red)
+![React](https://img.shields.io/badge/frontend-react-blue)
+
 ## Overview
 
 AptosAI Guard is a sophisticated wallet risk detection application that leverages machine learning to analyze and assess the risk level of Aptos blockchain transactions. The application consists of a Flask backend API and a React frontend interface, providing real-time risk scoring and transaction analysis.
 
 ## Loom Video Walkthrough
 
-[Insert Loom video link here]
+📽️ [Click to view walkthrough](https://loom.com/your-video-link) 
 
 ## UI Screenshots
 
@@ -16,15 +20,15 @@ AptosAI Guard is a sophisticated wallet risk detection application that leverage
 |-----------|------------------|
 | ![Home Screenshot](ui/result/home_screenshot.jpg) | ![Risk Score Screenshot](ui/result/risk_score_screenshot.jpg) |
 
-_Add more screenshots as needed._
 
 ## Features
 
 - Real-time transaction risk scoring
 - Machine learning-powered risk assessment
-- User-friendly web interface
-- Secure API endpoints
+- User-friendly web interface built with modern React frontend
+- Secure and modular Flask REST API
 - Integration with Aptos blockchain
+- Easily extendable architecture for future use cases
 
 ## Project Structure
 ```text
@@ -79,15 +83,46 @@ cd ../frontend
 npm start  # or yarn start
 ```
 
-The application will be available at http://localhost:3000
+The application will be available at
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
 
 ## API Documentation
 
 The backend API provides the following endpoints:
 
-- POST /api/risk-score: Calculate risk score for a transaction
-- GET /api/transaction-history: Retrieve transaction history
-- More endpoints to be documented...
+- POST /risk-score: Calculate the risk score for a given wallet address.
+- Request Body:
+  ```json
+  {
+    "wallet_address": "0x49fe344c4e0fcf3f90721b3c4b20c1a599f70348a0a772efe3933ff4d0578b9e"
+  }
+  ```
+  
+  Response:
+  ```json
+  {
+    "confidence": 0.9,
+    "label": "Trusted",
+    "wallet_address": "0x49fe344c4e0fcf3f90721b3c4b20c1a599f70348a0a772efe3933ff4d0578b9e",
+    "wallet_found": true
+  }
+  ```
+- POST /aptos_to_cad: Convert Aptos (APT) amount to CAD using real-time pricing.
+- Request Body:
+  ```json
+  {
+    "amount": 4.5
+  }
+  ```
+
+  Response:
+  ```json
+  {
+    "amount": 4.5,
+    "cad_value": 33.84
+  }
+  ```
 
 ## Contributing
 
