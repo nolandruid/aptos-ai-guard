@@ -19,8 +19,9 @@ export const ConnectWallet = () => {
         </h1>
 
         <p className="font-inter text-base sm:text-lg font-light max-w-2xl text-white leading-relaxed">
-        Before you send, AptosAI Guard scans wallet history, behavior, and patterns to detect red flags.
-        It’s fast, smart, and gives you peace of mind in seconds
+          Before you send, AptosAI Guard scans wallet history, behavior, and
+          patterns to detect red flags. It’s fast, smart, and gives you peace of
+          mind in seconds
         </p>
 
         <button
@@ -29,8 +30,13 @@ export const ConnectWallet = () => {
         >
           Connect Petra Wallet
         </button>
-
       </div>
+
+      <img
+        src="/images/iphone2.png"
+        alt="iPhone Mockup"
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[16  00px] sm:w-[1600px] lg:w-[1600px] z-1"
+      />
     </section>
   );
 };

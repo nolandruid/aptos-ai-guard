@@ -37,7 +37,7 @@ export const TrustLevelSlider = ({
           style={trackStyle}
         /> */}
       </div>
-      <div className="font-inter text-md text-primary-light text-center mt-4">
+      <div className="font-inter text-2xl text-primary-light text-center mt-4">
         {mappedValue}
         <br />
         <span className="font-inter text-xl font-bold text-primary-light">{getTrustLabel(parseFloat(mappedValue))}</span>
