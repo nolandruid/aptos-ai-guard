@@ -4,30 +4,32 @@ export const ConnectWallet = () => {
   const { connect } = usePetra();
 
   return (
-    <section className="py-16 min-h-screen bg-gradient-to-b from-black to-green-950">
-      <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-12">
-        <div className="flex flex-col gap-4">
-          <h1 className="font-satoshi text-6xl font-light text-left text-white">
-            <span className="font-bold">AptosAI Guard</span> checks wallet trust{" "}
-            <br />
-            with AI before you send APT
-          </h1>
-          <p className="font-inter text-left text-lg font-light max-w-3xl text-white">
-            Connect your Petra Wallet, enter the recipient’s address and amount,
-            and let AptosAI Guard scan the blockchain for activity patterns,
-            transaction history, and wallet behavior. Our ML model evaluates the
-            risk and gives you a clear warning if something feels off
-          </p>
-          <div className="flex justify-end">
-            <button
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              onClick={connect}
-            >
-              Connect Petra Wallet
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-end"></div>
+    <section className="relative py-20 min-h-screen bg-linear-to-b/decreasing from-indigo-500 to-teal-400">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/pattern.svg')] bg-repeat opacity-50"
+      />
+
+      {/* Contenido centrado y responsivo */}
+      <div className="relative z-10 container mx-auto px-4 flex flex-col items-center gap-8 text-center">
+        <h1 className="font-satoshi text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight">
+          <span className="font-bold">AptosAI Guard</span> checks wallet trust
+          <br className="hidden sm:block" />
+          with AI before you send APT
+        </h1>
+
+        <p className="font-inter text-base sm:text-lg font-light max-w-2xl text-white leading-relaxed">
+        Before you send, AptosAI Guard scans wallet history, behavior, and patterns to detect red flags.
+        It’s fast, smart, and gives you peace of mind in seconds
+        </p>
+
+        <button
+          onClick={connect}
+          className="bg-accent hover:bg-accent-pale text-primary-black font-semibold px-6 py-3 rounded shadow transition  text-btn-text duration-200"
+        >
+          Connect Petra Wallet
+        </button>
+
       </div>
     </section>
   );

@@ -17,6 +17,7 @@ export const TransactionForm = () => {
     handleSubmit,
     formState: { errors, isValid },
     onSubmit,
+    amount,
   } = useTransactionForm();
 
   const { cadValue } = useMoneyConversionStore()
@@ -31,21 +32,26 @@ export const TransactionForm = () => {
   }
 
   return (
+    <section className="relative my-30">
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-xl p-6 shadow max-w-md mx-auto"
+      className="bg-surface  rounded-xl p-6 shadow-lg max-w-md mx-auto   bg-linear-to-b from-white/80 from-60% to-white-400/80"
     >
-      <h2 className="text-xl font-semibold mb-4">Send Aptos Tokens</h2>
+      <div className="mb-4">
+        <label className="font-inter text-primary-light text-md font-bold">
+        You are sending from:
+        </label>
+        <input
+          value={address ? `${address.slice(0, 8)}...${address.slice(-4)}` : "—"}
+          placeholder="0xabc123..."
+          className="font-inter text-md w-full border px-3 py-2 rounded mt-2 border-none focus:border-none bg-gray-100 shadow-sm text-gray-500"
+          disabled
+        />
 
-      <div className="bg-gray-100 rounded p-4 mb-4">
-        <p className="text-sm text-gray-600">You are sending from:</p>
-        <p className="text-sm font-mono text-blue-600">
-          {address ? `${address.slice(0, 8)}...${address.slice(-4)}` : "—"}
-        </p>
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 font-medium">
+        <label className="font-inter text-primary-light text-md font-bold">
           Recipient Wallet Address
         </label>
         <input
@@ -57,7 +63,7 @@ export const TransactionForm = () => {
                 : "Invalid address format",
           })}
           placeholder="0xabc123..."
-          className="w-full border px-3 py-2 rounded"
+          className="font-inter text-gray-500 text-md w-full border px-3 py-2 rounded mt-2 border-none focus:border-none bg-gray-100 shadow-sm "
         />
         {errors.destinationAddress && (
           <span className="text-red-500 text-sm">
@@ -69,36 +75,37 @@ export const TransactionForm = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Amount to Send</label>
+        <label className="block mb-1 font-bold font-inter text-primary-light">Amount to Send in APTs</label>
         <input
           type="number"
           step="0.01"
           {...register("amount", {
             required: "Amount is required",
-            min: { value: 0.001, message: "Amount must be greater than 0" },
+            min: { value: 0, message: "Amount must be greater than 0" },
           })}
           placeholder="1.5"
-          className="w-full border px-3 py-2 rounded"
+          className="font-inter text-md w-full border px-3 py-2 rounded mt-2 border-none focus:border-none bg-gray-100 shadow-sm text-gray-500"
         />
         {errors.amount && (
           <span className="text-red-500 text-sm">{errors.amount.message}</span>
         )}
       </div>
 
-      <div className="bg-green-100 text-green-700 rounded p-4 mb-4">
-        <p className="font-semibold">Receiver gets</p>
-        <p className="text-2xl font-bold">
-          {cadValue === null ? "—" : `${cadValue.toFixed(2)} CAD`}
+      <div className="bg-gray-100 text-green-700 rounded p-4 mb-4">
+        <p className="font-inter text-primary-light font-semibold">Receiver Gets</p>
+        <p className="font-inter text-primary-light text-2xl font-bold">
+          {cadValue === null ? "—" : `${amount} APT = ${cadValue.toFixed(2)} CAD`}
         </p>
       </div>
 
       <button
         type="submit"
         disabled={!isValid}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-accent hover:bg-accent-pale text-primary-black font-semibold px-6 py-3 rounded shadow transition  text-btn-text duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Send Now
       </button>
     </form>
+    </section>
   );
 };

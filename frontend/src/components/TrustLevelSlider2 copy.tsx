@@ -20,13 +20,16 @@ export const TrustLevelSlider = ({
   const trackStyle = {
     background: `linear-gradient(to right, red 0%, orange ${
       riskScore * 50
-    }%, #9ae600 100%)`,
+    }%, green 100%)`,
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-2">
-      <div className="flex items-center gap-0">
-        {/* <input
+    <div className="w-full max-w-md mx-auto mt-10">
+      <label className="block text-lg font-semibold text-gray-700 mb-2">
+        Trust Level
+      </label>
+      <div className="flex items-center gap-4">
+        <input
           type="range"
           min="0"
           max="1"
@@ -35,12 +38,10 @@ export const TrustLevelSlider = ({
           disabled
           className="w-full h-2 rounded-lg appearance-none cursor-not-allowed"
           style={trackStyle}
-        /> */}
+        />
       </div>
-      <div className="font-inter text-md text-primary-light text-center mt-4">
-        {mappedValue}
-        <br />
-        <span className="font-inter text-xl font-bold text-primary-light">{getTrustLabel(parseFloat(mappedValue))}</span>
+      <div className="mt-4 text-center text-xl font-bold text-gray-800">
+        {mappedValue} - {getTrustLabel(parseFloat(mappedValue))}
       </div>
     </div>
   );

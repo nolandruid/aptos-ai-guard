@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satosho-Regular.woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satosho-Bold.woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satosho-Medium.woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satosho-Light.woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/inter2.woff2');
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    /* Colors */
+    --color-primary: #04B1E7;           
+    --color-primary-dark: #0C272D;      
+    --color-primary-light: #4670FB;     
+  
+    --color-secondary: #4444B0;         
+  
+    --color-accent: #E5F54E;            
+    --color-accent-dark: #C1D931;
+
+    --color-btn-text: #0c272d;
+
+    /* Fonts */
+    --font-sans: 'Inter', 'Satoshi', 'Arial', sans-serif;
+    --font-satoshi: 'Satoshi', sans-serif;
+}
