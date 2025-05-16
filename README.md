@@ -50,20 +50,31 @@ aptos-ai-guard/
 ## Installation
 
 1. Clone the repository:
-```text
-git clone https://github.com/yourusername/aptos-ai-guard.git
+```powershell
+git clone https://github.com/nolandruid/aptos-ai-guard.git
 cd aptos-ai-guard
 ```
 
 2. Set up the backend:
-```text
+For Windows (CMD or PowerShell):
+```powershell
+cd backend
+python -m venv venv
+source venv/Scripts/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+flask run
+```
+
+For Mac, Ubuntu, WSL:
+```powershell
 cd backend
 make setup # Set up virtual environment and install dependencies
 make start # Run the Flask development server
 ```
 
 3. Set up the frontend:
-```text
+```powershell
 cd ../frontend
 npm install  # or yarn install
 npm run dev
@@ -72,13 +83,13 @@ npm run dev
 ## Running the Application
 
 1. Start the backend server:
-```text
+```powershell
 cd backend
 flask run
 ```
 
 2. Start the frontend development server:
-```text
+```powershell
 cd ../frontend
 npm start  # or yarn start
 ```
