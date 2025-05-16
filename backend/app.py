@@ -14,7 +14,7 @@ try:
         os.path.dirname(__file__),
         '..',  
         'model_training',
-        'Trained Model',
+        'trained_model',
         'LR_Trained_Model.pkl'
     )
     model_path = os.path.abspath(model_path)
@@ -82,11 +82,13 @@ def risk_score():
     if model_loaded:    
         label_raw = model.predict([features])[0]
         confidence = model.predict_proba([features]).max()
+        print('loaded from model')
         label = "Trusted" if label_raw == 1 else "Suspicious"
     else:
         # dummy result
         label = "Trusted"
         confidence = 0.87
+        print('dummy result')
 
     result = {
         "wallet_address": wallet_address,
