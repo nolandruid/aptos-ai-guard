@@ -58,15 +58,15 @@ cd aptos-ai-guard
 2. Set up the backend:
 ```text
 cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r ../requirements.txt
+make setup # Set up virtual environment and install dependencies
+make start # Run the Flask development server
 ```
 
 3. Set up the frontend:
 ```text
 cd ../frontend
 npm install  # or yarn install
+npm run dev
 ```
 
 ## Running the Application
