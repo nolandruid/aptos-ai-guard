@@ -74,6 +74,8 @@ make start # Run the Flask development server
 ```
 
 3. Set up the frontend:
+> ⚠️ Requires Node.js v18+ and npm v8+  
+> You can download the LTS version from https://nodejs.org/
 ```powershell
 cd ../frontend
 npm install  # or yarn install
