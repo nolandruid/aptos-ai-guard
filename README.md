@@ -12,7 +12,7 @@ AptosAI Guard is a sophisticated wallet risk detection application that leverage
 
 ## Loom Video Walkthrough
 
-📽️ [Click to view walkthrough]([https://loom.com/your-video-link](https://www.loom.com/share/70af07d271cb42bf80975104da70d4d4?sid=d6c811cc-6f30-43ab-a0ff-4d266053a3c0)) 
+📽️ [Click to view walkthrough](https://www.loom.com/share/70af07d271cb42bf80975104da70d4d4?sid=d6c811cc-6f30-43ab-a0ff-4d266053a3c0) 
 
 ## UI Screenshots
 
